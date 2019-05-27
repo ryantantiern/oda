@@ -5,29 +5,49 @@ import QrScanner from '../QrScanner'
 const styles = {
     Paper: {
         padding: 20
+    },
+    QrScanner: {
+      height: 300,
+      width: 300,
+      margin: 20
     }
 }
 
 export default class extends Component {
   constructor(props) {
     super(props)
-    this.handleChange = this.handleChange.bind(this)
+    this.state = {
+      qrCodeFound: false
+    }
+    this.handleScan = this.handleScan.bind(this)
+    this.handlerError = this.handlerScanError.bind(this)
   }
 
-  handleChange = ({0: file}) => {
-    // process QR code in back end
-    if (file) console.log(file)
+  handleScan = (data) => {
+    if (data) {
+      this.setState({
+        qrCodeFound: true
+      })
+      // do some validation on the data
+    }
+  }
+
+  handlerScanError = (err) => {
+    console.error(err)
   }
 
   render() {
-    return<div>        
-            <Grid container direction='column' alignItems='center'> 
-              <Grid item sm>
-                <QrScanner onChange={this.handleChange}/>     
-              </Grid>
-            </Grid>    
-          </div> 
+    return(      
+      <Grid container direction='column' alignItems='center' >
+        <Grid item style={styles.QrScanner}>
+          {!this.state.qrCodeFound && 
+            <QrScanner
+              onScan={this.handleScan}
+              onError={this.handlerScanError}
+             />
+          }
+        </Grid>
+      </Grid>
+    )
   }
 }
-
-

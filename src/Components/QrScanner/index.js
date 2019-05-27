@@ -1,20 +1,27 @@
 import React, { Fragment } from 'react'
-import { Button } from '@material-ui/core';
+import QrReader from 'react-qr-reader'
 
-export default ({ onChange }) => 
-  <Fragment>
+export default ({ onScan, onError }) => 
+  <QrReader 
+    delay={300}
+    onScan={onScan}
+    onError={onError}
+    style={{width: '100%', height: '100%'}}
+    />
+
+  {/* <Fragment>
     <input
-        id="raised-button"
+        id="qr-code"
         accept="image/*"
         type="file"
         style={{display: 'none'}}
-        onChange={(e) => onChange(e.target.files)}
+        onChange={(e) => onChange(e.target)}
     />
-    <label htmlFor="raised-button">
+    <label htmlFor="qr-code">
         <Button variant="contained" component="span" style={{padding: 20, marginTop: 10, marginBottom: 10}}>
           Upload
         </Button>
     </label>
-  </Fragment>
+  </Fragment> */}
 
 
